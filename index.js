@@ -9,10 +9,10 @@ var passport = require("passport");
 var BearerStrategy = require('passport-azure-ad').BearerStrategy;
 
 /* Update these four variables with your values from the B2C portal */
-var clientID = "93733604-cc77-4a3c-a604-87084dd55348"; 
-var b2cDomainHost = "fabrikamb2c.b2clogin.com";
-var tenantIdGuid = "775527ff-9a37-4307-8b3d-cc311f58d925";
-var policyName = "B2C_1_SUSI";
+var clientID = "7a7e43ef-4da9-424d-ba21-5e1f8a936cde"; 
+var b2cDomainHost = "sgsmcs.b2clogin.com";
+var tenantIdGuid = "f9a3f145-a634-41ac-b28a-1c0a1c3524f9";
+var policyName = "B2C_1A_signup_signin";
 
 
 var options = {
@@ -53,9 +53,9 @@ app.get("/hello",
         console.log('User info: ', req.user);
         console.log('Validated claims: ', claims);
         
-        if (claims['scp'].split(" ").indexOf("demo.read") >= 0) {
+        if (claims['scp'].split(" ").indexOf("smcs.read") >= 0) {
             // Service relies on the name claim.  
-            res.status(200).json({'name': claims['name']});
+            res.status(200).json({'name': claims['name'], 'project': claims['smcsTenantId'], 'SMCS Role': claims['smcsRole']});
         } else {
             console.log("Invalid Scope, 403");
             res.status(403).json({'error': 'insufficient_scope'}); 
